@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Page</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("{% static 'images/book.jpeg' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Heading Styles */
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            color: #007BFF;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+        .heading span {
+            color: #ff6600;
+        }
+
+        /* Search Box Styles */
+        .search-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .search-box input, .search-box select, .search-box button {
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-box input, .search-box select {
+            flex: 1;
+        }
+        .search-box button {
+            background-color: #007BFF;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-box button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Post Styles */
+        .post {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #fff;
+        }
+        .post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .post h2 {
+            margin: 0 0 10px;
+            font-size: 1.5rem;
+            color: #007BFF;
+        }
+        .post p {
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+        .post small {
+            display: block;
+            margin-top: 10px;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        .link-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.add-blog-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.add-blog-link:hover {
+    background-color: #218838;
+}
+
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .search-box {
+                flex-direction: column;
+            }
+            .search-box input, .search-box select, .search-box button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="heading">My <span>Blogs</span></h1>
+        <form method="get" class="search-box">
+            <input type="text" name="q" placeholder="Search..." value="{{ query }}">
+            <select name="category">
+                <option value="">All Categories</option>
+                {% for category in categories %}
+                    <option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>
+                        {{ category }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Search</button>
+        </form>
+
+        {% if posts %}
+            {% for post in posts %}
+                <div class="post">
+                    <h2>{{ post.title }}</h2>
+                    <p><strong>Author:</strong> {{ post.author }}</p>
+                    <p><strong>Category:</strong> {{ post.category }}</p>
+                    <p>{{ post.content|truncatechars:200 }}</p>
+                    <small>Posted on: {{ post.created_at }}</small>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+    </div>
+<div class="link-container">
+    <a href="{% url 'add_blog' %}" class="add-blog-link">Add New Blog</a>
+</div>
+
+
+</body>
+</html>

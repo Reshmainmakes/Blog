@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Blog</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url("{% static 'images/book.jpeg' %}");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #333;
+}
+
+.container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9); /* Slight transparency */
+    border-radius: 12px; /* Softer corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deeper shadow for emphasis */
+}
+
+ h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007BFF; /* Vibrant blue */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.form-group {
+    margin-bottom: 20px; /* More spacing for a clean layout */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px; /* Better spacing */
+    font-weight: bold; /* Emphasize labels */
+    color: #333;
+}
+
+.form-group input, .form-group textarea {
+    width: 97%;
+    padding: 12px; /* Larger padding for better usability */
+    border: 1px solid #ccc;
+    border-radius: 8px; /* Rounded edges */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
+    transition: all 0.3s ease; /* Smooth focus effect */
+    font-size: 16px;
+    background: #f9f9f9; /* Light background */
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: #007BFF; /* Highlight on focus */
+    background: #fff; /* White background on focus */
+    outline: none;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.5); /* Glow effect */
+}
+
+.form-group textarea {
+    resize: vertical;
+    height: 120px; /* Slightly taller */
+}
+
+.form-group button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745; /* Green color for success */
+    color: white;
+    border: none;
+    border-radius: 8px; /* Softer edges */
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+}
+
+.form-group button:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.02); /* Slight zoom */
+}
+
+.form-group button:active {
+    background-color: #1e7e34; /* Even darker green on click */
+}
+
+    </style>
+</head>
+<body>
+    <h1>Add New Blog</h1>
+    <div class="container">
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %};">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" placeholder="Enter blog title">
+            </div>
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input type="text" id="author" name="author" placeholder="Enter author name">
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <input type="text" id="category" name="category" placeholder="Enter category">
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea id="content" name="content" placeholder="Enter blog content"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">Add Blog</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
